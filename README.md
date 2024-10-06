@@ -1,3 +1,5 @@
+![logo](https://github.com/user-attachments/assets/3114fb4d-db25-4f0c-9f1b-2fb2781ddd8a)
+
 # Velos
 
 Velos is a highly efficient and lightweight Solana data streaming client with a focused goal: **decoupling** the data stream. Sometimes, all you need is the raw data, and Velos delivers it faster and with less compute power than traditional methods.
