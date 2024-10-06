@@ -1,4 +1,4 @@
-![logo](https://github.com/user-attachments/assets/3114fb4d-db25-4f0c-9f1b-2fb2781ddd8a)
+![velos](https://github.com/user-attachments/assets/978962e7-0334-4837-9d12-6c0015b129d1)
 
 # Velos
 
