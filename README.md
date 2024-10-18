@@ -28,9 +28,6 @@ This should be available from most VPS providers for **less than $20 USD per mon
 - **Minimal Compute Usage:** Velos is designed to consume the least possible processing power while delivering real-time data streams.
 - **Modular:** Use Velos as either a gRPC-based transaction streamer or as a crate in your Rust applications.
 - **Support for Commitment Levels:**
-  - **Processed:** Stream transactions as soon as they are processed.
-  - **Confirmed:** Stream transactions once 31 validators have voted to confirm them.
-  - **Finalized:** Stream transactions after final confirmation.
 
 ## Installation (Coming Soon)
 
