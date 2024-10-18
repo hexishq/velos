@@ -1893,6 +1893,7 @@ name = "velos"
 version = "0.0.1"
 dependencies = [
  "bitflags",
+ "num_enum",
  "solana-sdk",
 ]
 
