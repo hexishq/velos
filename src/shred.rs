@@ -53,6 +53,8 @@
 ! Max size for shred packet is 1228 bytes (Legacy) or 1203 bytes (Merkle).
 */
 
+use std::error::Error;
+
 use crate::shred::{shred_code::ShredCode, shred_data::ShredData};
 use bitflags::bitflags;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
@@ -62,10 +64,12 @@ use solana_sdk::{
     pubkey::Pubkey,
     signature::Signature,
 };
+mod layout;
 mod legacy;
 mod merkle;
 mod shred_code;
 mod shred_data;
+mod verify_shred;
 
 // LAST_SHRED_IN_SLOT also implies DATA_COMPLETE_SHRED.
 // So it cannot be LAST_SHRED_IN_SLOT if not also DATA_COMPLETE_SHRED.
@@ -84,6 +88,7 @@ pub enum ShredType {
     Code = 0b0101_1010, // 90
 }
 
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 enum ShredVariant {
     LegacyCode, // 0b0101_1010
     LegacyData, // 0b1010_0101
@@ -108,7 +113,71 @@ enum ShredVariant {
     }, // 0b10??_????
 }
 
-struct ShredCommonHeader {
+impl ShredVariant {
+    pub fn from_u8(bytes: u8) -> Result<ShredVariant, ()> {
+        match bytes {
+            0b0101_1010 => return Ok(ShredVariant::LegacyCode),
+            0b1010_0101 => return Ok(ShredVariant::LegacyData),
+            v if (v & 0b1111_0000) == 0b0110_0000 => {
+                let proof_size = v & 0b0000_1111;
+                let chained = true;
+                let resigned = false;
+                Ok(ShredVariant::MerkleCode {
+                    proof_size,
+                    chained,
+                    resigned,
+                })
+            }
+
+            v if (v & 0b1111_0000) == 0b0111_0000 => {
+                let proof_size = v & 0b0000_1111;
+                let chained = true;
+                let resigned = true;
+                Ok(ShredVariant::MerkleCode {
+                    proof_size,
+                    chained,
+                    resigned,
+                })
+            }
+
+            v if (v & 0b1111_0000) == 0b1000_0000 => {
+                let proof_size = v & 0b0000_1111;
+                let chained = false;
+                let resigned = false;
+                Ok(ShredVariant::MerkleData {
+                    proof_size,
+                    chained,
+                    resigned,
+                })
+            }
+
+            v if (v & 0b1111_0000) == 0b1001_0000 => {
+                let proof_size = v & 0b0000_1111;
+                let chained = true;
+                let resigned = false;
+                Ok(ShredVariant::MerkleData {
+                    proof_size,
+                    chained,
+                    resigned,
+                })
+            }
+
+            v if (v & 0b1111_0000) == 0b1011_0000 => {
+                let proof_size = v & 0b0000_1111;
+                let chained = true;
+                let resigned = true;
+                Ok(ShredVariant::MerkleData {
+                    proof_size,
+                    chained,
+                    resigned,
+                })
+            }
+            _ => Err(()),
+        }
+    }
+}
+
+pub struct ShredCommonHeader {
     signature: Signature,
     shred_variant: ShredVariant,
     slot: Slot,
@@ -117,13 +186,13 @@ struct ShredCommonHeader {
     fec_set_index: u32,
 }
 
-struct DataShredHeader {
+pub struct DataShredHeader {
     parent_offset: u16,
     data_flags: ShredFlags,
     size: u16, // common shred header + data shred header + data
 }
 
-struct CodingShredHeader {
+pub struct CodingShredHeader {
     num_data_shreds: u16,
     num_coding_shreds: u16,
     position: u16, // [0..num_coding_shreds)
