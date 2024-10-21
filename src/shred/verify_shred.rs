@@ -45,6 +45,8 @@ enum VerifyShredErros {
     SlotMissing,
     #[error("Signature missing")]
     SignatureMissing,
+    #[error("Signed data missing")]
+    SignedDataMissing,
 }
 
 fn verify_shred(packet: Packet) -> Result<(), VerifyShredErros> {
@@ -61,6 +63,10 @@ fn verify_shred(packet: Packet) -> Result<(), VerifyShredErros> {
     let signature = match layout::get_signature(&shred) {
         Some(signature) => signature,
         None => return Err(VerifyShredErros::SignatureMissing),
+    };
+
+    let Some(data) = layout::get_signed_data(&shred) else {
+        return Err(VerifyShredErros::SignedDataMissing);
     };
 
     Ok(())

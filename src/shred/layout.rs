@@ -2,7 +2,7 @@ use std::ops::Range;
 
 use solana_sdk::{clock::Slot, hash::Hash, signature::Signature};
 
-use super::ShredVariant;
+use super::{merkle, ShredVariant};
 
 pub const SIZE_OF_SIGNATURE: usize = 64;
 const SIZE_OF_SHRED_VARIANT: usize = 1;
@@ -12,7 +12,7 @@ const SIZE_OF_PAYLOAD: usize = 1228;
 const SIGNED_MESSAGE_OFFSETS: Range<usize> = SIZE_OF_SIGNATURE..SIZE_OF_PAYLOAD;
 const SIZE_OF_SHRED_SLOT: usize = 8;
 const OFFSET_OF_SHRED_INDEX: usize = OFFSET_OF_SHRED_SLOT + SIZE_OF_SHRED_SLOT;
-enum SignedData<'a> {
+pub enum SignedData<'a> {
     Chunk(&'a [u8]), // Chunk of payload past signature.
     MerkleRoot(Hash),
 }
@@ -59,13 +59,19 @@ pub fn get_signed_data(shred: &[u8]) -> Option<SignedData> {
             proof_size,
             chained,
             resigned,
-        } => {}
+        } => {
+            let merkle_root =
+                merkle::get_merkle_root_from_shred(shred, proof_size, chained, resigned)?;
+            return Some(SignedData::MerkleRoot(merkle_root));
+        }
         ShredVariant::MerkleData {
             proof_size,
             chained,
             resigned,
-        } => todo!(),
+        } => {
+            let merkle_root =
+                merkle::get_merkle_root_from_shred(shred, proof_size, chained, resigned)?;
+            return Some(SignedData::MerkleRoot(merkle_root));
+        }
     }
-
-    None
 }
