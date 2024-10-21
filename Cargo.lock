@@ -1895,6 +1895,7 @@ dependencies = [
  "bitflags",
  "num_enum",
  "solana-sdk",
+ "thiserror",
 ]
 
 [[package]]

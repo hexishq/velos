@@ -10,4 +10,5 @@ edition = "2021"
 solana-sdk = "1.18.26"
 bitflags = "2.6.0"
 num_enum = "0.7.3"
+thiserror = "1.0.64"
 

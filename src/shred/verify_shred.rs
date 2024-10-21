@@ -2,11 +2,12 @@ use std::net::IpAddr;
 
 use bitflags::bitflags;
 use solana_sdk::clock::Slot;
+use thiserror::Error;
 
 use super::layout;
 
-const PACKET_DATA_SIZE: usize = 1280 - 40 - 8;
-const SIZE_OF_NONCE: usize = 4;
+pub const PACKET_DATA_SIZE: usize = 1280 - 40 - 8;
+pub const SIZE_OF_NONCE: usize = 4;
 
 pub struct Packet {
     pub data: [u8; PACKET_DATA_SIZE],
@@ -36,9 +37,13 @@ bitflags! {
     }
 }
 
+#[derive(Debug, Error)]
 enum VerifyShredErros {
+    #[error("Invalid shred size")]
     InvalidShredSize,
+    #[error("Slot missing")]
     SlotMissing,
+    #[error("Signature missing")]
     SignatureMissing,
 }
 

@@ -4,12 +4,14 @@ use solana_sdk::{clock::Slot, hash::Hash, signature::Signature};
 
 use super::ShredVariant;
 
-const SIZE_OF_SIGNATURE: usize = 64;
+pub const SIZE_OF_SIGNATURE: usize = 64;
 const SIZE_OF_SHRED_VARIANT: usize = 1;
 const OFFSET_OF_SHRED_SLOT: usize = SIZE_OF_SIGNATURE + SIZE_OF_SHRED_VARIANT;
 const OFFSET_OF_SHRED_VARIANT: usize = SIZE_OF_SIGNATURE;
 const SIZE_OF_PAYLOAD: usize = 1228;
 const SIGNED_MESSAGE_OFFSETS: Range<usize> = SIZE_OF_SIGNATURE..SIZE_OF_PAYLOAD;
+const SIZE_OF_SHRED_SLOT: usize = 8;
+const OFFSET_OF_SHRED_INDEX: usize = OFFSET_OF_SHRED_SLOT + SIZE_OF_SHRED_SLOT;
 enum SignedData<'a> {
     Chunk(&'a [u8]), // Chunk of payload past signature.
     MerkleRoot(Hash),
@@ -36,6 +38,12 @@ pub fn get_shred_variant(shred: &[u8]) -> Option<ShredVariant> {
         Ok(variant) => return Some(variant),
         Err(_) => return None,
     };
+}
+
+pub fn get_index(shred: &[u8]) -> Option<u32> {
+    <[u8; 4]>::try_from(shred.get(OFFSET_OF_SHRED_INDEX..)?.get(..4)?)
+        .map(u32::from_le_bytes)
+        .ok()
 }
 
 pub fn get_signed_data(shred: &[u8]) -> Option<SignedData> {
