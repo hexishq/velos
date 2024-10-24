@@ -7,7 +7,7 @@
 
 use std::{
     collections::{BTreeMap, HashMap, VecDeque},
-    sync::Mutex,
+    sync::{Mutex, RwLock},
 };
 
 use indexmap::{IndexMap, IndexSet};
@@ -34,6 +34,10 @@ pub struct GossipTable {
     purged: VecDeque<(Hash, u64 /*timestamp*/)>,
     // Mapping from nodes' pubkeys to their respective shred-version.
     shred_versions: HashMap<Pubkey, u16>,
+}
+
+impl GossipTable {
+    pub fn new() {}
 }
 
 #[derive(PartialEq, Eq, Debug)]

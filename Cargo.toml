@@ -1,14 +1,27 @@
-[workspace]
-members = ["gossip"]
-
 [package]
 name = "velos"
-version = "0.0.1"
+version = "0.1.0"
 edition = "2021"
 
-[dependencies]
+[workspace]
+members = [ 
+    "gossip", "shred", 
+]
+
+
+
+[workspace.dependencies]
 solana-sdk = "1.18.26"
 bitflags = "2.6.0"
 num_enum = "0.7.3"
 thiserror = "1.0.64"
+serde = "1.0.210"
+indexmap = "2.6.0"
+lru = "0.12.5"
+bincode = "1.3.3"
+solana-version = "2.0.13"
+bv = "0.11.1"
+hexis-shred =  { path = "./shred" }
+
+
 
