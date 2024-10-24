@@ -808,11 +808,24 @@ name = "hexis-gossip"
 version = "0.1.0"
 dependencies = [
  "bincode",
+ "bv",
+ "hexis-shred",
  "indexmap",
  "lru",
  "serde",
  "solana-sdk 1.18.26",
  "solana-version",
+]
+
+[[package]]
+name = "hexis-shred"
+version = "0.1.0"
+dependencies = [
+ "bitflags",
+ "num_enum",
+ "serde",
+ "solana-sdk 1.18.26",
+ "thiserror",
 ]
 
 [[package]]
@@ -2037,13 +2050,7 @@ dependencies = [
 
 [[package]]
 name = "velos"
-version = "0.0.1"
-dependencies = [
- "bitflags",
- "num_enum",
- "solana-sdk 1.18.26",
- "thiserror",
-]
+version = "0.1.0"
 
 [[package]]
 name = "version_check"

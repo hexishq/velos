@@ -58,6 +58,7 @@ use std::error::Error;
 use crate::shred::{shred_code::ShredCode, shred_data::ShredData};
 use bitflags::bitflags;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
 use solana_sdk::{
     clock::Slot,
     hash::{hashv, Hash},
@@ -82,7 +83,9 @@ bitflags! {
 }
 #[repr(u8)]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
-#[derive(PartialEq, Eq, Debug, Clone, Copy, Hash, TryFromPrimitive, IntoPrimitive)]
+#[derive(
+    PartialEq, Eq, Debug, Clone, Copy, Hash, TryFromPrimitive, IntoPrimitive, Serealize, Deserealize,
+)]
 pub enum ShredType {
     Data = 0b1010_0101, // 165
     Code = 0b0101_1010, // 90

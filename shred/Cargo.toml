@@ -1,0 +1,11 @@
+[package]
+name = "hexis-shred"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+solana-sdk =  { workspace = true }
+bitflags = { workspace = true }
+num_enum = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
