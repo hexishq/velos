@@ -12,4 +12,8 @@ bincode = { workspace = true }
 solana-version = { workspace = true}
 bv = { workspace = true }
 hexis-shred = { workspace = true }
-
+tokio = { workspace = true }
+rand = { workspace = true }
+solana-bloom = {workspace = true }
+thiserror = { workspace = true }
+dotenv = { workspace = true }

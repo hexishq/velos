@@ -1,10 +1,11 @@
-use std::{
-    net::{IpAddr, Ipv4Addr, SocketAddr},
-    time::{SystemTime, UNIX_EPOCH},
+use {
+    serde::{Deserialize, Serialize},
+    solana_sdk::pubkey::Pubkey,
+    std::{
+        net::{IpAddr, Ipv4Addr, SocketAddr},
+        time::{SystemTime, UNIX_EPOCH},
+    },
 };
-
-use serde::{Deserialize, Serialize};
-use solana_sdk::pubkey::Pubkey;
 
 const SOCKET_CACHE_SIZE: usize = 12;
 const SOCKET_ADDR_UNSPECIFIED: SocketAddr =
@@ -23,11 +24,21 @@ pub struct ContactInfo {
     cache: [SocketAddr; SOCKET_CACHE_SIZE],
 }
 
+impl ContactInfo {
+    pub fn pubkey(&self) -> &Pubkey {
+        &self.pubkey
+    }
+
+    pub fn sockets(&self) -> &Vec<SocketEntry> {
+        &self.sockets
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 enum Extension {}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
-struct SocketEntry {
+pub struct SocketEntry {
     key: u8,
     index: u8,
     offset: u16,
