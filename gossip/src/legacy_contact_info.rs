@@ -1,6 +1,8 @@
-use serde::{Deserialize, Serialize};
-use solana_sdk::pubkey::Pubkey;
-use std::net::SocketAddr;
+use {
+    serde::{Deserialize, Serialize},
+    solana_sdk::pubkey::Pubkey,
+    std::net::SocketAddr,
+};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct LegacyContactInfo {
@@ -29,4 +31,10 @@ pub struct LegacyContactInfo {
     wallclock: u64,
     /// node shred version
     shred_version: u16,
+}
+
+impl LegacyContactInfo {
+    pub fn pubkey(&self) -> &Pubkey {
+        &self.id
+    }
 }

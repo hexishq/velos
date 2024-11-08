@@ -1,6 +1,8 @@
-use hexis_shred::shred::ShredType;
-use serde::{Deserialize, Serialize};
-use solana_sdk::{clock::Slot, pubkey::Pubkey};
+use {
+    hexis_shred::shred::ShredType,
+    serde::{Deserialize, Serialize},
+    solana_sdk::{clock::Slot, pubkey::Pubkey},
+};
 
 pub type DuplicateShredIndex = u16;
 
@@ -11,7 +13,6 @@ pub struct DuplicateShred {
     pub slot: Slot,
     _unused: u32,
     _unused_shred_type: ShredType,
-    // Serialized DuplicateSlotProof split into chunks.
     num_chunks: u8,
     chunk_index: u8,
     chunk: Vec<u8>,
