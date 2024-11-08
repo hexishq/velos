@@ -165,6 +165,9 @@ mod tests {
 
     #[tokio::test]
     async fn test_send_ping() {
+        //if you are using the mainnet or testnet maybe the test will fail
+        //only because the entry point dont respond,
+        //if the test fail you should try again some times to ensure the test really is working or just use the devnet
         let (udp, entry_point, _, _) = get_env_vars();
         let connection = Connection::new(&udp)
             .await
