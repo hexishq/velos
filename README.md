@@ -3,82 +3,101 @@
 
 # Velos
 
-Velos is a highly efficient and lightweight Solana data streaming client with a focused goal: **decoupling** the data stream. Sometimes, all you need is the raw data, and Velos delivers it faster and with less compute power than traditional methods.
+Velos is a specialized data streaming client for Solana that dramatically reduces infrastructure costs through efficient decoupling of the data reception layer.
 
-The client is designed to minimize resource consumption while providing a direct stream of Solana shreds, transactions, and commitment levels. Whether you're streaming transactions through gRPC or embedding Velos as a crate in your Rust application, the goal remains the same—**getting the data you need, when you need it, with maximum efficiency.**
+By focusing solely on processing shreds, verifying them, constructing entries, and receiving gossip votes for commitment tracking, Velos provides a lightweight solution that can run on minimal hardware while maintaining full data parity.
 
 ## Why Velos?
 
-In many Solana use cases, full nodes are overkill. Velos simplifies things by decoupling the data stream from the broader Solana client. This allows developers and services to focus purely on receiving real-time transactions and commitment statuses without the overhead of a full node.
+Traditional access to real-time Solana data requires running full nodes with complete runtime and related services - excessive overhead when your goal is data streaming. Velos solves this by:
 
-### Cost-Efficient Setup
+- **Focused Architecture:** Processes only essential data components
+- **Minimal Resources:** Runs on lightweight infrastructure
+- **Cost Efficiency:** Reduces infrastructure costs by 50x
+- **Global Scalability:** Deploy multiple instances easily
+- **Zero DevOps:** Simple setup and maintenance
 
-Velos is designed to run on cost-effective VPS setups, making it accessible to a wide range of developers. You can expect to run Velos on a machine with specs around:
+### For Institutions
 
-- **CPU:** 1-2 vCPUs
-- **Memory:** 2-4 GB RAM
-- **Storage:** 20 GB SSD
-- **Network:** 1 Gbps connection recommended
+- Deploy globally with minimal costs
+- Superior scalability with lightweight instances
+- Simple redundancy across regions
+- Full data parity without infrastructure complexity
 
-This should be available from most VPS providers for **less than $20 USD per month**.
+### For Developers
+
+- Efficient data streaming without full node overhead
+- Minimalist approach focused on essential data flow
+- Zero infrastructure knowledge needed
+- Focus on building, not maintenance
 
 ## Features
 
-- **Decoupled Data Stream:** Focus purely on streaming Solana shreds and transactions without unnecessary compute overhead.
-- **Minimal Compute Usage:** Velos is designed to consume the least possible processing power while delivering real-time data streams.
-- **Modular:** Use Velos as either a gRPC-based transaction streamer or as a crate in your Rust applications.
-- **Support for Commitment Levels:**
-  - **Processed:** Stream transactions as soon as they are processed.
-  - **Confirmed:** Stream transactions once 31 validators have voted to confirm them.
-  - **Finalized:** Stream transactions after final confirmation.
+- **Optimized Data Reception:**
+  - Direct shred processing
+  - Entry construction
+  - Transaction streaming
+  - Commitment tracking via gossip
+- **Efficient Architecture:**
+
+  - Minimal resource consumption
+  - Streamlined data flow
+  - High-performance processing
+
+- **Developer Tools:**
+  - gRPC API
+  - Rust crate integration
+  - Simple configuration
+  - Plugin system (coming soon)
 
 ## Installation (Coming Soon)
 
-### As a Crate in Rust
-
-Add Velos to your `Cargo.toml`:
+### As a Crate
 
 ```toml
 [dependencies]
 velos = "0.0.1"
 ```
 
-### As a gRPC Service
-
-Clone the repository:
+### As a Service
 
 ```bash
 git clone https://github.com/hexishq/velos.git
 cd velos
-```
-
-Run the service (once available):
-
-```bash
 cargo run --release
 ```
 
 ## Roadmap
 
-- [ ] Initial version of the data streaming client
-- [ ] Fine-tune machine recommendations based on real-world usage
-- [ ] Optimize gRPC streaming
-- [ ] Expand configuration options for finer control over performance
+Phase 1: v0 - Core Data Streaming (Q4 2024)
+
+- [ ] Gossip Protocol Connection
+- [ ] Turbine Integration
+  - [ ] Shred reception and verification
+  - [ ] Entry processing
+  - [ ] Transaction streaming
+- [ ] Jito Integration
+- [ ] gRPC Implementation
+
+Phase 2: v1 - Plugin System
+
+- [ ] Geyser Interface Layer
+- [ ] Adaptable Plugin Architecture
+- [ ] Extended API Support
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues to suggest features or report bugs.
+We welcome contributions! Feel free to:
 
-1. Fork the repository
-2. Create a new feature branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push the branch (`git push origin feature-branch`)
-5. Create a Pull Request
+- Open issues for bugs or feature requests
+- Submit pull requests
+- Join discussions
+- Share feedback
 
 ## License
 
-Velos is licensed under the **Apache 2.0 License**. See `LICENSE` for more information.
+Velos is licensed under the Apache 2.0 License. See `LICENSE` for details.
 
 ## Acknowledgments
 
-Special thanks to the Solana developer community for providing the tools and inspiration to build Velos.
+Built with inspiration from the Solana community and a commitment to making blockchain infrastructure more accessible for everyone.
