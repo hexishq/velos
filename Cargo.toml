@@ -1,12 +1,11 @@
 [workspace]
-members = ["gossip"]
+members = ["gossip", "core", "client"]
 
-[package]
+[workspace.package]
 name = "velos"
 version = "0.0.1"
 edition = "2021"
+authors = ["leafar <leafarnft@gmail.com>"]
+license = "Apache-2.0"
 
-[dependencies]
-solana-sdk = "1.18.26"
-bitflags = "2.6.0"
-num_enum = "0.7.3"
+[workspace.dependencies]

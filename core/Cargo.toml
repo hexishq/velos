@@ -1,0 +1,10 @@
+[package]
+name = "velos-core"
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+solana-sdk = "2.0.15"
+bitflags = "2.6.0"
+num_enum = "0.7.3"
