@@ -29,7 +29,7 @@ This combination creates an efficient tree-like structure for data propagation.
 
 ### **Diagram: Plumtree Algorithm**
 
-![[imgs/tree-construction.gif]]
+![Plumtree Algorithm](imgs/tree-construction.gif)
 
 > **Source:** [Plumtree by Bartosz Sypytkowski](https://www.bartoszsypytkowski.com/plumtree/)
 
