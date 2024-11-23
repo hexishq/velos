@@ -121,7 +121,7 @@ Each message in Solana’s Gossip Protocol has a specific role in keeping the ne
 5. **Ping**: "Are you still active?"
 6. **Pong**: "Yes, I’m here!"
 
-![[imgs/Protocol.png]]
+![[overview/imgs/Protocol.png]]
 
 These messages are serialized into small binary packets and transmitted efficiently across the network.
 
