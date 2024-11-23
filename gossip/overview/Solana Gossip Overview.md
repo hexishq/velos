@@ -39,7 +39,7 @@ This combination creates an efficient tree-like structure for data propagation.
 
 Below is a GIF demonstrating a **gossip protocol** with a **fanout of 9**, the same configuration used by Solana. The simulation shows how a message propagates across **50 nodes** in just **3 hops**.
 
-![[imgs/gossip simulation.gif]]
+![Gossip Simulation](imgs/gossip%20simulation.gif)
 
 > **Source:** Simulation from [Gossip Simulator by Luis F. Lopez](https://flopezluis.github.io/gossip-simulator/)
 
@@ -104,7 +104,7 @@ To handle the flow of messages, Solana’s Gossip Service employs a multi-thread
 
 ### **Diagram: Gossip Service Workflow**
 
-![[imgs/Gossip Service.png]]
+![Gossip Service Workflow](imgs/Gossip%20Service.png)
 
 This diagram illustrates how these threads work together to ensure seamless communication across the network.
 
@@ -121,7 +121,7 @@ Each message in Solana’s Gossip Protocol has a specific role in keeping the ne
 5. **Ping**: "Are you still active?"
 6. **Pong**: "Yes, I’m here!"
 
-![[overview/imgs/Protocol.png]]
+![Protocol Messages](imgs/Protocol.png)
 
 These messages are serialized into small binary packets and transmitted efficiently across the network.
 
